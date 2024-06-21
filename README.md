@@ -13,7 +13,7 @@ Apply TypeScript to complete this assignment. The application includes the follo
 - Implement features to add the value of the saving amount.
 - Display a summary section showing total income, total expenses, target saving amount, and current saving amount.
 - Use CSS modules or styled-components or anything you prefer to style the application components.
-- Depoly the app on netlify or vercel or anywhere you prefer and then add the link to the PR.
+- Deploy the app on netlify or vercel or anywhere you prefer and then add the link to the PR.
 
 ## Level 2: Additional Requirements
 
