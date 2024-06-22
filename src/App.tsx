@@ -1,21 +1,37 @@
+// Import our custom CSS
+// import '../styles.scss'
+
+// Import all of Bootstrap's JS
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="App">
+        <div className="container text-center">
+          <p className="h1 mt-5 mb-5">Billy's Budget App</p>
+          <div className="row align-items-start">
+            <div className="col">
+              <p className="h2">Income</p>
+            </div>
+            <div className="col">
+              <p className="h2">Expense</p>
+              <select
+                className="form-select"
+                aria-label="Default select example"
+              >
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+            <div className="col">
+              <p className="h2">Target</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
