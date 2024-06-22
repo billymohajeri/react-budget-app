@@ -12,6 +12,17 @@ function App() {
           <div className="row align-items-start">
             <div className="col">
               <p className="h2">Income</p>
+              <div className="mb-3">
+                <label htmlFor="income-source" className="form-label mt-5">
+                  Income source
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="income-source"
+                />
+              </div>
+              <div className="mb-3"></div>
             </div>
             <div className="col">
               <p className="h2">Expense</p>
