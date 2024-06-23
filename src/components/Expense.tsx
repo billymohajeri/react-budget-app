@@ -1,15 +1,47 @@
 import React from "react";
+import { today } from "../App";
 
 export const Expense = () => {
   return (
     <>
       <p className="h2">Expense</p>
-      <select className="form-select" aria-label="Default select example">
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
+
+      <label htmlFor="expense-source" className="form-label mt-5">
+        Expense source
+      </label>
+      <input type="text" className="form-control" id="expense-source" />
+
+      <label htmlFor="amount-expense" className="form-label mt-3">
+        Amount of expense
+      </label>
+      <div className="input-group mb-3">
+        <span className="input-group-text">$</span>
+        <input
+          type="number"
+          id="amount-expense"
+          className="form-control"
+          aria-label="Amount (to the nearest dollar)"
+          min={1}
+          defaultValue={1}
+        />
+        <span className="input-group-text">.00</span>
+      </div>
+
+      <div className="mt-3 mb-5">
+        <label htmlFor="dateInput" className="form-label">
+          Date of expense
+        </label>
+        <input
+          type="date"
+          className="form-control"
+          id="dateInput"
+          defaultValue={today}
+        />
+      </div>
+
+      <button type="submit" className="btn btn-primary">
+        Add expense
+      </button>
     </>
   );
 };

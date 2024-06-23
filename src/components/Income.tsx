@@ -1,17 +1,15 @@
-import React from "react";
-
-const today = new Date().toISOString().split("T")[0];
+import { today } from "../App";
 
 const Income = () => {
   return (
-    <div>
+    <>
       <p className="h2">Income</p>
-      
+
       <label htmlFor="income-source" className="form-label mt-5">
         Income source
       </label>
       <input type="text" className="form-control" id="income-source" />
-      
+
       <label htmlFor="amount-source" className="form-label mt-3">
         Amount of income
       </label>
@@ -41,9 +39,9 @@ const Income = () => {
       </div>
 
       <button type="submit" className="btn btn-primary">
-        Add Income
+        Add income
       </button>
-    </div>
+    </>
   );
 };
 
