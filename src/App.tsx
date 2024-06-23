@@ -1,5 +1,6 @@
 import { Expense } from "./components/Expense";
 import Income from "./components/Income";
+import Target from "./components/Target";
 
 export const today = new Date().toISOString().split("T")[0];
 
@@ -17,7 +18,7 @@ function App() {
               <Expense />
             </div>
             <div className="col px-5">
-              <p className="h2">Target</p>
+              <Target />
             </div>
           </div>
         </div>
