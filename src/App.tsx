@@ -1,6 +1,8 @@
 // Import our custom CSS
 // import '../styles.scss'
 
+import Income from "./components/Income";
+
 // Import all of Bootstrap's JS
 
 function App() {
@@ -11,18 +13,7 @@ function App() {
           <p className="h1 mt-5 mb-5">Billy's Budget App</p>
           <div className="row align-items-start">
             <div className="col">
-              <p className="h2">Income</p>
-              <div className="mb-3">
-                <label htmlFor="income-source" className="form-label mt-5">
-                  Income source
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="income-source"
-                />
-              </div>
-              <div className="mb-3"></div>
+              <Income />
             </div>
             <div className="col">
               <p className="h2">Expense</p>
