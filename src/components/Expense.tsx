@@ -15,14 +15,14 @@ export const Expense = () => {
         Amount of expense
       </label>
       <div className="input-group mb-3">
-        <span className="input-group-text">$</span>
+        <span className="input-group-text">€</span>
         <input
           type="number"
           id="amount-expense"
           className="form-control"
           aria-label="Amount (to the nearest dollar)"
-          min={1}
-          defaultValue={1}
+          min={0}
+          defaultValue={0}
         />
         <span className="input-group-text">.00</span>
       </div>
