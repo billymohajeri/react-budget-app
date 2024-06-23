@@ -1,3 +1,4 @@
+import { Balance } from "./components/Balance";
 import { Expense } from "./components/Expense";
 import Income from "./components/Income";
 import Target from "./components/Target";
@@ -20,6 +21,9 @@ function App() {
             <div className="col px-5">
               <Target />
             </div>
+          </div>
+          <div className="row align-items-center mt-5">
+            <Balance />
           </div>
         </div>
       </div>
