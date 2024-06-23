@@ -1,6 +1,7 @@
 // Import our custom CSS
 // import '../styles.scss'
 
+import { Expense } from "./components/Expense";
 import Income from "./components/Income";
 
 // Import all of Bootstrap's JS
@@ -16,16 +17,7 @@ function App() {
               <Income />
             </div>
             <div className="col">
-              <p className="h2">Expense</p>
-              <select
-                className="form-select"
-                aria-label="Default select example"
-              >
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
+              <Expense />
             </div>
             <div className="col">
               <p className="h2">Target</p>
