@@ -3,12 +3,16 @@ import { Expense } from "./components/Expense";
 import Income from "./components/Income";
 import Target from "./components/Target";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const today = new Date().toISOString().split("T")[0];
 
 function App() {
   return (
     <>
       <div className="App">
+        <ToastContainer />
         <div className="container text-center">
           <p className="h1 mt-5 mb-5">Billy's Budget App</p>
           <div className="row align-items-start">
