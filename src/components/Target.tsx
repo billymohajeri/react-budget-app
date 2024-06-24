@@ -5,14 +5,14 @@ const Target = () => {
     <>
       <p className="h2">Target</p>
 
-      <label htmlFor="amount-expense" className="form-label mt-5">
+      <label htmlFor="amount-target" className="form-label mt-5">
         Set target
       </label>
-      <div className="input-group mb-3">
+      <div className="input-group">
         <span className="input-group-text">€</span>
         <input
           type="number"
-          id="amount-expense"
+          id="amount-target"
           className="form-control"
           aria-label="Amount (to the nearest dollar)"
           min={0}
@@ -21,10 +21,16 @@ const Target = () => {
         <span className="input-group-text">.00</span>
       </div>
 
-      <button type="submit" className="btn btn-outline-danger mt-3">
+      <button type="submit" className="btn btn-outline-danger mt-2">
         Reset
       </button>
-      <p className="mt-5">
+      <p className="mt-2">
+        Current saving:
+      </p>
+      <p className="mt-2">
+        Target:
+      </p>
+      <p className="mt-0">
         Progress:
       </p>
       <div

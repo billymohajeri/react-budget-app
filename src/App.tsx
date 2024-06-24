@@ -23,7 +23,9 @@ function App() {
             </div>
           </div>
           <div className="row align-items-center mt-5">
-            <Balance />
+            <div className="col px-5 mt-5">
+              <Balance />
+            </div>
           </div>
         </div>
       </div>

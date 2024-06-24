@@ -34,7 +34,7 @@ export const Expense = () => {
         <input
           type="date"
           className="form-control"
-          id="dateInput"
+          id="date-input-expense"
           defaultValue={today}
         />
       </div>

@@ -27,7 +27,7 @@ const Income = () => {
       </div>
 
       <div className="mt-3 mb-5">
-        <label htmlFor="dateInput" className="form-label">
+        <label htmlFor="date-input-income" className="form-label">
           Date of income
         </label>
         <input

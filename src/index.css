@@ -1,5 +1,16 @@
 .col-border {
-    border-right: 1px rgb(170, 170, 170) dotted;
+  border-right: 1px rgb(170, 170, 170) dotted;
+}
 
-  }
-  
+.balance-container {
+  display: flex;
+  flex-direction: column;
+  width: 33.3%;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+/* 
+#balance-input {
+  align-items: center;
+} */
