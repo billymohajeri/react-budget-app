@@ -52,7 +52,7 @@ const Income = () => {
       year: "numeric",
     });
 
-    const formattedDate = formatter.format(date).replace(/,/g, '');
+    const formattedDate = formatter.format(date).replace(/,/g, "");
     return formattedDate;
   };
 
@@ -112,7 +112,7 @@ const Income = () => {
         </button>
       </form>
       {incomes && incomes.length > 0 ? (
-        <ul className="mt-5">
+        <ul className="mt-5 list">
           {incomes.map((income) => {
             return (
               <li key={income.id}>
@@ -123,7 +123,7 @@ const Income = () => {
           })}
         </ul>
       ) : (
-        <p>There is no income in the list</p>
+        <p className="mt-5">There is no income in the list</p>
       )}
     </>
   );
