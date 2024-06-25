@@ -3,12 +3,19 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
 
+type IncomeType = {
+  incomeSource: string;
+  incomeAmount: number;
+  incomeDate: string;
+};
+
 const Income = () => {
-  const [income, setIncome] = useState({
+  const [income, setIncome] = useState<IncomeType>({
     incomeSource: "",
     incomeAmount: 0,
     incomeDate: "",
   });
+  const [incomes, setIncomes] = useState<IncomeType[]>([]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIncome((prevState) => {
@@ -63,7 +70,6 @@ const Income = () => {
             className="form-control"
             aria-label="Amount (to the nearest euro)"
             min={0}
-            defaultValue={0}
             required
             onChange={handleChange}
           />
@@ -89,6 +95,13 @@ const Income = () => {
           Add income
         </button>
       </form>
+      {incomes && incomes.length ? (
+        <ul>
+          <li>aaa</li>
+        </ul>
+      ) : (
+        <p>There is no income in the list</p>
+      )}
     </>
   );
 };

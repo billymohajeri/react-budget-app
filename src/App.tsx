@@ -6,8 +6,6 @@ import Target from "./components/Target";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const today = new Date().toISOString().split("T")[0];
-
 function App() {
   return (
     <>

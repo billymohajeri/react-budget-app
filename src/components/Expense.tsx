@@ -1,5 +1,3 @@
-import { today } from "../App";
-
 export const Expense = () => {
   return (
     <>
@@ -21,7 +19,6 @@ export const Expense = () => {
           className="form-control"
           aria-label="Amount (to the nearest dollar)"
           min={0}
-          defaultValue={0}
         />
         <span className="input-group-text">.00</span>
       </div>
@@ -34,7 +31,6 @@ export const Expense = () => {
           type="date"
           className="form-control"
           id="date-input-expense"
-          defaultValue={today}
         />
       </div>
 

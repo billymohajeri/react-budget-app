@@ -14,7 +14,6 @@ export const Balance = () => {
           className="form-control"
           aria-label="Amount (to the nearest dollar)"
           min={0}
-          defaultValue={0}
         />
         <span className="input-group-text">.00</span>
       </div>
