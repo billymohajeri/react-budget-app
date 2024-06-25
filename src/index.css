@@ -10,7 +10,7 @@
   justify-content: center;
   margin: 0 auto;
 }
-/* 
-#balance-input {
-  align-items: center;
-} */
+ 
+ul {
+  text-align: left;
+}

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
 
 type IncomeType = {
+  id?: string;
   incomeSource: string;
   incomeAmount: number;
   incomeDate: string;
@@ -37,7 +38,22 @@ const Income = () => {
       incomeAmount: 0,
       incomeDate: "",
     });
-    console.log(newIncome);
+    setIncomes((prevIncomes) => {
+      return [...prevIncomes, newIncome];
+    });
+  };
+
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+
+    const formattedDate = formatter.format(date).replace(/,/g, '');
+    return formattedDate;
   };
 
   return (
@@ -95,9 +111,16 @@ const Income = () => {
           Add income
         </button>
       </form>
-      {incomes && incomes.length ? (
-        <ul>
-          <li>aaa</li>
+      {incomes && incomes.length > 0 ? (
+        <ul className="mt-5">
+          {incomes.map((income) => {
+            return (
+              <li key={income.id}>
+                {income.incomeSource}: {income.incomeAmount}EUR on{" "}
+                {formatDate(income.incomeDate)}
+              </li>
+            );
+          })}
         </ul>
       ) : (
         <p>There is no income in the list</p>
