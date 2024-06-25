@@ -12,7 +12,7 @@ const Target = () => {
           type="number"
           id="amount-target"
           className="form-control"
-          aria-label="Amount (to the nearest dollar)"
+          aria-label="Amount (to the nearest euro)"
           min={0}
         />
         <span className="input-group-text">.00</span>

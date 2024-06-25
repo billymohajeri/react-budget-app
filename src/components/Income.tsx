@@ -111,6 +111,7 @@ const Income = () => {
           Add income
         </button>
       </form>
+      
       {incomes && incomes.length > 0 ? (
         <ul className="mt-5 list">
           {incomes.map((income) => {
