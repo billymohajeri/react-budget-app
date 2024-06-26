@@ -1,16 +1,22 @@
-import { ChangeEvent, FormEvent, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { TransactionType } from "../types";
 
 import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
 import { useForm } from "react-hook-form";
+import { spawn } from "child_process";
 
 type IncomeProps = {
   onGetTotalIncome: (amount: number) => void;
 };
 
 const Income = (props: IncomeProps) => {
-  const { register, watch, handleSubmit, reset } = useForm<TransactionType>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<TransactionType>();
   const [incomes, setIncomes] = useState<TransactionType[]>([]);
 
   useEffect(() => {
@@ -69,12 +75,19 @@ const Income = (props: IncomeProps) => {
           <input
             type="number"
             id="incomeAmount"
-            {...register("amount", { required: true, min: 0 })}
+            {...register("amount", {
+              required: true,
+              min: {
+                value: 1,
+                message: "The amount can't be negative or zero",
+              },
+            })}
             className="form-control"
             aria-label="Amount (to the nearest euro)"
           />
           <span className="input-group-text">.00</span>
         </div>
+        {errors.amount && <span className="text-danger">{errors.amount.message}</span>}
 
         <div className="mt-3 mb-5">
           <label htmlFor="incomeDate" className="form-label">
@@ -93,15 +106,13 @@ const Income = (props: IncomeProps) => {
         </button>
       </form>
 
-      {incomes && incomes.length > 0 ? (
+      {incomes.length > 0 ? (
         <ul className="mt-5 list">
-          {incomes.map((income) => {
-            return (
-              <li key={income.id}>
-                {income.source}: {income.amount}EUR on {formatDate(income.date)}
-              </li>
-            );
-          })}
+          {incomes.map((income) => (
+            <li key={income.id}>
+              {income.source}: {income.amount}EUR on {formatDate(income.date)}
+            </li>
+          ))}
         </ul>
       ) : (
         <p className="mt-5">There is no income in the list</p>
