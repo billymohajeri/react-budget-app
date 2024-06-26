@@ -6,9 +6,9 @@ import { nanoid } from "nanoid";
 
 export const Expense = () => {
   const [expense, setExpense] = useState<TransactionType>({
-    expenseSource: "",
-    expenseAmount: 0,
-    expenseDate: "",
+    source: "",
+    amount: 0,
+    date: "",
   });
   const [expenses, setExpenses] = useState<TransactionType[]>([]);
 
@@ -22,15 +22,15 @@ export const Expense = () => {
     event.preventDefault();
     const newExpense: TransactionType = {
       id: nanoid(),
-      expenseSource: expense.expenseSource,
-      expenseAmount: Number(expense.expenseAmount),
-      expenseDate: expense.expenseDate,
+      source: expense.source,
+      amount: Number(expense.amount),
+      date: expense.date,
     };
-    toast.success(`${newExpense.expenseSource} added successfully!`);
+    toast.success(`${newExpense.source} added successfully!`);
     setExpense({
-      expenseSource: "",
-      expenseAmount: 0,
-      expenseDate: "",
+      source: "",
+      amount: 0,
+      date: "",
     });
     setExpenses((prevExpenses) => {
       return [...prevExpenses, newExpense];
@@ -61,7 +61,7 @@ export const Expense = () => {
           className="form-control"
           id="expenseSource"
           name="expenseSource"
-          value={expense.expenseSource}
+          value={expense.source}
           required
           onChange={handleChange}
         />
@@ -75,7 +75,7 @@ export const Expense = () => {
             type="number"
             id="expenseAmount"
             name="expenseAmount"
-            value={expense.expenseAmount}
+            value={expense.amount}
             className="form-control"
             aria-label="Amount (to the nearest euro)"
             min={0}
@@ -94,7 +94,7 @@ export const Expense = () => {
             className="form-control"
             id="expenseDate"
             name="expenseDate"
-            value={expense.expenseDate}
+            value={expense.date}
             required
             onChange={handleChange}
           />
@@ -110,8 +110,8 @@ export const Expense = () => {
           {expenses.map((expense) => {
             return (
               <li key={expense.id}>
-                {expense.expenseSource}: {expense.expenseAmount}EUR on{" "}
-                {formatDate(expense.expenseDate)}
+                {expense.source}: {expense.amount}EUR on{" "}
+                {formatDate(expense.date)}
               </li>
             );
           })}
