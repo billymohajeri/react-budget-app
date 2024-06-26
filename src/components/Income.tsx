@@ -6,9 +6,9 @@ import { nanoid } from "nanoid";
 
 const Income = () => {
   const [income, setIncome] = useState<TransactionType>({
-    incomeSource: "",
-    incomeAmount: 0,
-    incomeDate: "",
+    source: "",
+    amount: 0,
+    date: "",
   });
   const [incomes, setIncomes] = useState<TransactionType[]>([]);
 
@@ -22,15 +22,15 @@ const Income = () => {
     event.preventDefault();
     const newIncome: TransactionType = {
       id: nanoid(),
-      incomeSource: income.incomeSource,
-      incomeAmount: Number(income.incomeAmount),
-      incomeDate: income.incomeDate,
+      source: income.source,
+      amount: Number(income.amount),
+      date: income.date,
     };
-    toast.success(`${newIncome.incomeSource} added successfully!`);
+    toast.success(`${newIncome.source} added successfully!`);
     setIncome({
-      incomeSource: "",
-      incomeAmount: 0,
-      incomeDate: "",
+      source: "",
+      amount: 0,
+      date: "",
     });
     setIncomes((prevIncomes) => {
       return [...prevIncomes, newIncome];
@@ -62,7 +62,7 @@ const Income = () => {
           className="form-control"
           id="incomeSource"
           name="incomeSource"
-          value={income.incomeSource}
+          value={income.source}
           required
           onChange={handleChange}
         />
@@ -76,7 +76,7 @@ const Income = () => {
             type="number"
             id="incomeAmount"
             name="incomeAmount"
-            value={income.incomeAmount}
+            value={income.amount}
             className="form-control"
             aria-label="Amount (to the nearest euro)"
             min={0}
@@ -95,7 +95,7 @@ const Income = () => {
             className="form-control"
             id="incomeDate"
             name="incomeDate"
-            value={income.incomeDate}
+            value={income.date}
             required
             onChange={handleChange}
           />
@@ -111,8 +111,7 @@ const Income = () => {
           {incomes.map((income) => {
             return (
               <li key={income.id}>
-                {income.incomeSource}: {income.incomeAmount}EUR on{" "}
-                {formatDate(income.incomeDate)}
+                {income.source}: {income.amount}EUR on {formatDate(income.date)}
               </li>
             );
           })}
