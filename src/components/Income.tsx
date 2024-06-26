@@ -53,7 +53,9 @@ const Income = (props: IncomeProps) => {
   };
 
   const handleDelete = (id: string) => {
-    setIncomes((prevIncomes) => prevIncomes.filter(income => income.id !== id));
+    setIncomes((prevIncomes) =>
+      prevIncomes.filter((income) => income.id !== id)
+    );
     toast.info("Income entry deleted.");
   };
 
@@ -125,15 +127,18 @@ const Income = (props: IncomeProps) => {
       {incomes.length > 0 ? (
         <ul className="mt-5 list-unstyled">
           {incomes.map((income) => (
-            <li key={income.id} className="d-flex justify-content-between align-items-center">
+            <li
+              key={income.id}
+              className="d-flex justify-content-between align-items-center"
+            >
               <div>
                 {income.source}: {income.amount}EUR on {formatDate(income.date)}
               </div>
-              <FontAwesomeIcon 
-                icon={faTrash} 
-                className="text-danger ms-3" 
-                style={{ cursor: 'pointer' }} 
-                onClick={() => handleDelete(income.id)} 
+              <FontAwesomeIcon
+                icon={faTrash}
+                className="text-danger ms-3"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleDelete(income.id)}
               />
             </li>
           ))}

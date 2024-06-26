@@ -51,6 +51,13 @@ const Expense = (props: ExpenseProps) => {
     reset();
   };
 
+  const handleDelete = (id: string) => {
+    setExpenses((prevExpenses) =>
+      prevExpenses.filter((expense) => expense.id !== id)
+    );
+    toast.info("Expense entry deleted.");
+  };
+
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
     const formatter = new Intl.DateTimeFormat("en-US", {
@@ -120,8 +127,20 @@ const Expense = (props: ExpenseProps) => {
       {expenses.length > 0 ? (
         <ul className="mt-5 list">
           {expenses.map((expense) => (
-            <li key={expense.id}>
-              {expense.source}: {expense.amount}EUR on {formatDate(expense.date)}
+            <li
+              key={expense.id}
+              className="d-flex justify-content-between align-items-center"
+            >
+              <div>
+                {expense.source}: {expense.amount}EUR on{" "}
+                {formatDate(expense.date)}
+              </div>
+              <FontAwesomeIcon
+                icon={faTrash}
+                className="text-danger ms-3"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleDelete(expense.id)}
+              />
             </li>
           ))}
         </ul>
