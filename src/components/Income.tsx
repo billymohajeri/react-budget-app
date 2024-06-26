@@ -1,22 +1,16 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { TransactionType } from "../types";
 
 import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
 
-type IncomeType = {
-  id?: string;
-  incomeSource: string;
-  incomeAmount: number;
-  incomeDate: string;
-};
-
 const Income = () => {
-  const [income, setIncome] = useState<IncomeType>({
+  const [income, setIncome] = useState<TransactionType>({
     incomeSource: "",
     incomeAmount: 0,
     incomeDate: "",
   });
-  const [incomes, setIncomes] = useState<IncomeType[]>([]);
+  const [incomes, setIncomes] = useState<TransactionType[]>([]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setIncome((prevState) => {
@@ -26,7 +20,7 @@ const Income = () => {
 
   const handleIncomeSubmit = (event: FormEvent) => {
     event.preventDefault();
-    const newIncome = {
+    const newIncome: TransactionType = {
       id: nanoid(),
       incomeSource: income.incomeSource,
       incomeAmount: Number(income.incomeAmount),
@@ -111,7 +105,7 @@ const Income = () => {
           Add income
         </button>
       </form>
-      
+
       {incomes && incomes.length > 0 ? (
         <ul className="mt-5 list">
           {incomes.map((income) => {

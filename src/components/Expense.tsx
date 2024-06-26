@@ -1,22 +1,16 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { TransactionType } from "../types";
 
 import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
 
-type ExpenseType = {
-  id?: string;
-  expenseSource: string;
-  expenseAmount: number;
-  expenseDate: string;
-};
-
 export const Expense = () => {
-  const [expense, setExpense] = useState<ExpenseType>({
+  const [expense, setExpense] = useState<TransactionType>({
     expenseSource: "",
     expenseAmount: 0,
     expenseDate: "",
   });
-  const [expenses, setExpenses] = useState<ExpenseType[]>([]);
+  const [expenses, setExpenses] = useState<TransactionType[]>([]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setExpense((prevState) => {
@@ -26,7 +20,7 @@ export const Expense = () => {
 
   const handleExpenseSubmit = (event: FormEvent) => {
     event.preventDefault();
-    const newExpense = {
+    const newExpense: TransactionType = {
       id: nanoid(),
       expenseSource: expense.expenseSource,
       expenseAmount: Number(expense.expenseAmount),
