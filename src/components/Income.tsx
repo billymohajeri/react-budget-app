@@ -1,54 +1,37 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import { TransactionType } from "../types";
 
 import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
+import { useForm } from "react-hook-form";
 
 type IncomeProps = {
   onGetTotalIncome: (amount: number) => void;
 };
 
 const Income = (props: IncomeProps) => {
-  const [income, setIncome] = useState<TransactionType>({
-    source: "",
-    amount: 0,
-    date: "",
-  });
-
+  const { register, watch, handleSubmit, reset } = useForm<TransactionType>();
   const [incomes, setIncomes] = useState<TransactionType[]>([]);
 
-  const totalIncome = incomes.reduce(
-    (total, currentIncome) => total + currentIncome.amount,
-    0
-  );
+  useEffect(() => {
+    const totalIncome = incomes.reduce(
+      (total, currentIncome) => total + currentIncome.amount,
+      0
+    );
 
-  props.onGetTotalIncome(totalIncome);
+    props.onGetTotalIncome(totalIncome);
+  }, [incomes, props]);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setIncome((prevState) => ({
-      ...prevState,
-      [name]: name === "amount" ? Number(value) : value,
-    }));
-  };
-
-  const handleIncomeSubmit = (event: FormEvent) => {
-    event.preventDefault();
+  const onSubmit = (data: TransactionType) => {
     const newIncome: TransactionType = {
       id: nanoid(),
-      source: income.source,
-      amount: Number(income.amount),
-      date: income.date,
+      source: data.source,
+      amount: Number(data.amount),
+      date: data.date,
     };
-    toast.success(`${newIncome.source} added successfully!`);
-    setIncome({
-      source: "",
-      amount: 0,
-      date: "",
-    });
-    setIncomes((prevIncomes) => {
-      return [...prevIncomes, newIncome];
-    });
+    toast.success(`${data.source} added successfully!`);
+    setIncomes((prevIncomes) => [...prevIncomes, newIncome]);
+    reset();
   };
 
   const formatDate = (dateString: string): string => {
@@ -67,7 +50,7 @@ const Income = (props: IncomeProps) => {
   return (
     <>
       <p className="h2">Income</p>
-      <form onSubmit={handleIncomeSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="incomeSource" className="form-label mt-5">
           Income source
         </label>
@@ -75,10 +58,7 @@ const Income = (props: IncomeProps) => {
           type="text"
           className="form-control"
           id="incomeSource"
-          name="source"
-          value={income.source}
-          required
-          onChange={handleChange}
+          {...register("source", { required: true })}
         />
 
         <label htmlFor="incomeAmount" className="form-label mt-3">
@@ -89,13 +69,9 @@ const Income = (props: IncomeProps) => {
           <input
             type="number"
             id="incomeAmount"
-            name="amount"
-            value={income.amount}
+            {...register("amount", { required: true, min: 0 })}
             className="form-control"
             aria-label="Amount (to the nearest euro)"
-            min={0}
-            required
-            onChange={handleChange}
           />
           <span className="input-group-text">.00</span>
         </div>
@@ -108,10 +84,7 @@ const Income = (props: IncomeProps) => {
             type="date"
             className="form-control"
             id="incomeDate"
-            name="date"
-            value={income.date}
-            required
-            onChange={handleChange}
+            {...register("date", { required: true })}
           />
         </div>
 
