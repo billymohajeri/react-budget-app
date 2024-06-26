@@ -61,7 +61,7 @@ const Income = () => {
           type="text"
           className="form-control"
           id="incomeSource"
-          name="incomeSource"
+          name="source"
           value={income.source}
           required
           onChange={handleChange}
@@ -75,7 +75,7 @@ const Income = () => {
           <input
             type="number"
             id="incomeAmount"
-            name="incomeAmount"
+            name="amount"
             value={income.amount}
             className="form-control"
             aria-label="Amount (to the nearest euro)"
@@ -94,7 +94,7 @@ const Income = () => {
             type="date"
             className="form-control"
             id="incomeDate"
-            name="incomeDate"
+            name="date"
             value={income.date}
             required
             onChange={handleChange}

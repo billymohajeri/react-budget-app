@@ -60,7 +60,7 @@ export const Expense = () => {
           type="text"
           className="form-control"
           id="expenseSource"
-          name="expenseSource"
+          name="source"
           value={expense.source}
           required
           onChange={handleChange}
@@ -74,7 +74,7 @@ export const Expense = () => {
           <input
             type="number"
             id="expenseAmount"
-            name="expenseAmount"
+            name="amount"
             value={expense.amount}
             className="form-control"
             aria-label="Amount (to the nearest euro)"
@@ -93,7 +93,7 @@ export const Expense = () => {
             type="date"
             className="form-control"
             id="expenseDate"
-            name="expenseDate"
+            name="date"
             value={expense.date}
             required
             onChange={handleChange}
@@ -117,7 +117,7 @@ export const Expense = () => {
           })}
         </ul>
       ) : (
-        <p className="mb-5 mt-5">There is no expense in the list</p>
+        <p className="mt-5">There is no expense in the list</p>
       )}
     </>
   );
