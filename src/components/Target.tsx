@@ -16,6 +16,8 @@ const Target = (props: TargetProps) => {
     setTarget(0);
   };
 
+  const progress = target ? (props.transferToSavingAmount / target) * 100 : 0;
+
   return (
     <>
       <p className="h2">Target</p>
@@ -45,20 +47,20 @@ const Target = (props: TargetProps) => {
       </form>
       <p className="mt-5">Current saving: {props.transferToSavingAmount}</p>
       <p className="mt-2">Target: {target}</p>
-      <p className="mt-0">Progress:</p>
+      <p className="mt-0">Progress: {progress.toFixed(0)}%</p>
       <div
         className="progress"
         role="progressbar"
-        aria-label="Example with label"
-        aria-valuenow={100}
+        aria-label="Savings progress"
+        aria-valuenow={progress}
         aria-valuemin={0}
-        aria-valuemax={target}
+        aria-valuemax={100}
       >
         <div
           className="progress-bar progress-bar-striped progress-bar-animated"
-          style={{ width: "25%" }}
+          style={{ width: `${progress}%` }}
         >
-          25%
+          {progress.toFixed(0)}%
         </div>
       </div>
     </>

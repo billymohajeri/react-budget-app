@@ -15,8 +15,8 @@ const Transfer = (props: TransferProps) => {
 
   const handleTransferAmountSubmit = (event: FormEvent) => {
     event.preventDefault();
-    props.onGetTransferToSavingAmount(100);
-    // setTransferAmount(0);
+    props.onGetTransferToSavingAmount(transferAmount);
+    setTransferAmount(0);
   };
 
   return (
@@ -35,8 +35,10 @@ const Transfer = (props: TransferProps) => {
             type="number"
             id="transferAmount"
             name="transferAmount"
+            value={transferAmount}
+            onChange={handleTransferAmountChange}
             className="form-control"
-            aria-label="Amount (to the nearest dollar)"
+            aria-label="Amount (to the nearest euro)"
             min={0}
           />
           <span className="input-group-text">.00</span>
