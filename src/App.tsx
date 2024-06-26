@@ -1,5 +1,5 @@
 import Transfer from "./components/Transfer";
-import { Expense } from "./components/Expense";
+import Expense from "./components/Expense";
 import Income from "./components/Income";
 import Target from "./components/Target";
 
@@ -38,7 +38,7 @@ function App() {
               <Expense onGetTotalExpense={getTotalExpense} />
             </div>
             <div className="col px-5">
-              <Target transferToSavingAmount={transferToSavingAmount}/>
+              <Target transferToSavingAmount={transferToSavingAmount} />
             </div>
           </div>
           <div className="row align-items-center mt-5">

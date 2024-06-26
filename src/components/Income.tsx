@@ -108,9 +108,7 @@ const Income = (props: IncomeProps) => {
             {...register("date")}
           />
         </div>
-        {errors.date && (
-          <p className="text-danger">{errors.date.message}</p>
-        )}
+        {errors.date && <p className="text-danger">{errors.date.message}</p>}
 
         <button type="submit" className="btn btn-primary mt-5">
           Add income

@@ -1,19 +1,43 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useState } from "react";
 
 type TargetProps = {
   transferToSavingAmount: number;
 };
 
+const targetSchema = z.object({
+  targetAmount: z
+    .number()
+    .min(1, "Target amount must be greater than zero"),
+});
+
+type TargetFormValues = {
+  targetAmount: number;
+};
+
 const Target = (props: TargetProps) => {
+  const {
+    register,
+    reset,
+    formState: { errors },
+  } = useForm<TargetFormValues>({
+    resolver: zodResolver(targetSchema),
+  });
+
   const [target, setTarget] = useState(0);
 
-  const handleTargetChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTarget(Number(event.target.value));
+  const handleTargetChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(event.target.value);
+    if (!isNaN(value)) {
+      setTarget(value);
+    }
   };
 
-  const handleIncomeSubmit = (event: FormEvent) => {
-    event.preventDefault();
+  const handleReset = () => {
     setTarget(0);
+    reset();
   };
 
   const progress = target ? (props.transferToSavingAmount / target) * 100 : 0;
@@ -21,7 +45,7 @@ const Target = (props: TargetProps) => {
   return (
     <>
       <p className="h2">Target</p>
-      <form onSubmit={handleIncomeSubmit}>
+      <form>
         <label htmlFor="targetAmount" className="form-label mt-5">
           Set target
         </label>
@@ -30,23 +54,28 @@ const Target = (props: TargetProps) => {
           <input
             type="number"
             id="targetAmount"
-            name="targetAmount"
-            value={target}
+            {...register("targetAmount", { valueAsNumber: true })}
             className="form-control"
             aria-label="Amount (to the nearest euro)"
             min={0}
-            required
             onChange={handleTargetChange}
           />
           <span className="input-group-text">.00</span>
         </div>
+        {errors.targetAmount && (
+          <span className="text-danger">{errors.targetAmount.message}</span>
+        )}
 
-        <button type="submit" className="btn btn-outline-danger mt-2">
+        <button
+          type="button"
+          className="btn btn-outline-danger mt-2 ms-2"
+          onClick={handleReset}
+        >
           Reset
         </button>
       </form>
-      <p className="mt-5">Current saving: {props.transferToSavingAmount}</p>
-      <p className="mt-2">Target: {target}</p>
+      <p className="mt-5">Current saving: {props.transferToSavingAmount} EUR</p>
+      <p className="mt-2">Target: {target} EUR</p>
       <p className="mt-0">Progress: {progress.toFixed(0)}%</p>
       <div
         className="progress"

@@ -1,53 +1,52 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useState, useEffect } from "react";
 import { TransactionType } from "../types";
 
 import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 
 type ExpenseProps = {
   onGetTotalExpense: (amount: number) => void;
 };
 
-export const Expense = (props: ExpenseProps) => {
-  const [expense, setExpense] = useState<TransactionType>({
-    source: "",
-    amount: 0,
-    date: "",
+const expenseSchema = z.object({
+  source: z.string().min(1, "Expense source is required"),
+  amount: z.number().min(1, "The amount can't be negative or zero"),
+  date: z.string().min(1, "Date is required"),
+});
+
+const Expense = (props: ExpenseProps) => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<TransactionType>({
+    resolver: zodResolver(expenseSchema),
   });
   const [expenses, setExpenses] = useState<TransactionType[]>([]);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setExpense((prevState) => ({
-      ...prevState,
-      [name]: name === "amount" ? Number(value) : value,
-    }));
-  };
+  useEffect(() => {
+    const totalExpense = expenses.reduce(
+      (total, currentExpense) => total + currentExpense.amount,
+      0
+    );
 
-  const totalExpense = expenses.reduce(
-    (total, currentExpense) => total + currentExpense.amount,
-    0
-  );
+    props.onGetTotalExpense(totalExpense);
+  }, [expenses, props]);
 
-  props.onGetTotalExpense(totalExpense);
-
-  const handleExpenseSubmit = (event: FormEvent) => {
-    event.preventDefault();
+  const onSubmit = (data: TransactionType) => {
     const newExpense: TransactionType = {
       id: nanoid(),
-      source: expense.source,
-      amount: Number(expense.amount),
-      date: expense.date,
+      source: data.source,
+      amount: Number(data.amount),
+      date: data.date,
     };
-    toast.success(`${newExpense.source} added successfully!`);
-    setExpense({
-      source: "",
-      amount: 0,
-      date: "",
-    });
-    setExpenses((prevExpenses) => {
-      return [...prevExpenses, newExpense];
-    });
+    toast.success(`${data.source} added successfully!`);
+    setExpenses((prevExpenses) => [...prevExpenses, newExpense]);
+    reset();
   };
 
   const formatDate = (dateString: string): string => {
@@ -62,10 +61,11 @@ export const Expense = (props: ExpenseProps) => {
     const formattedDate = formatter.format(date).replace(/,/g, "");
     return formattedDate;
   };
+
   return (
     <>
       <p className="h2">Expense</p>
-      <form onSubmit={handleExpenseSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="expenseSource" className="form-label mt-5">
           Expense source
         </label>
@@ -73,32 +73,31 @@ export const Expense = (props: ExpenseProps) => {
           type="text"
           className="form-control"
           id="expenseSource"
-          name="source"
-          value={expense.source}
-          required
-          onChange={handleChange}
+          {...register("source")}
         />
+        {errors.source && (
+          <p className="text-danger">{errors.source.message}</p>
+        )}
 
         <label htmlFor="expenseAmount" className="form-label mt-3">
           Amount of expense
         </label>
-        <div className="input-group mb-3">
+        <div className="input-group">
           <span className="input-group-text">€</span>
           <input
             type="number"
             id="expenseAmount"
-            name="amount"
-            value={expense.amount}
+            {...register("amount", { valueAsNumber: true })}
             className="form-control"
             aria-label="Amount (to the nearest euro)"
-            min={0}
-            required
-            onChange={handleChange}
           />
           <span className="input-group-text">.00</span>
         </div>
+        {errors.amount && (
+          <p className="text-danger">{errors.amount.message}</p>
+        )}
 
-        <div className="mt-3 mb-5">
+        <div className="mt-3">
           <label htmlFor="expenseDate" className="form-label">
             Date of expense
           </label>
@@ -106,27 +105,23 @@ export const Expense = (props: ExpenseProps) => {
             type="date"
             className="form-control"
             id="expenseDate"
-            name="date"
-            value={expense.date}
-            required
-            onChange={handleChange}
+            {...register("date")}
           />
         </div>
+        {errors.date && <p className="text-danger">{errors.date.message}</p>}
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary mt-5">
           Add expense
         </button>
       </form>
-      {expenses && expenses.length > 0 ? (
+
+      {expenses.length > 0 ? (
         <ul className="mt-5 list">
-          {expenses.map((expense) => {
-            return (
-              <li key={expense.id}>
-                {expense.source}: {expense.amount}EUR on{" "}
-                {formatDate(expense.date)}
-              </li>
-            );
-          })}
+          {expenses.map((expense) => (
+            <li key={expense.id}>
+              {expense.source}: {expense.amount}EUR on {formatDate(expense.date)}
+            </li>
+          ))}
         </ul>
       ) : (
         <p className="mt-5">There is no expense in the list</p>
@@ -134,3 +129,5 @@ export const Expense = (props: ExpenseProps) => {
     </>
   );
 };
+
+export default Expense;
