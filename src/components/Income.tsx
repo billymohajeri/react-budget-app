@@ -6,6 +6,8 @@ import { nanoid } from "nanoid";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 type IncomeProps = {
   onGetTotalIncome: (amount: number) => void;
@@ -25,6 +27,7 @@ const Income = (props: IncomeProps) => {
     formState: { errors },
   } = useForm<TransactionType>({
     resolver: zodResolver(incomeSchema),
+    defaultValues: { source: "", amount: 0, date: "" },
   });
   const [incomes, setIncomes] = useState<TransactionType[]>([]);
 
@@ -44,9 +47,14 @@ const Income = (props: IncomeProps) => {
       amount: Number(data.amount),
       date: data.date,
     };
-    toast.success(`${data.source} added successfully!`);
+    toast.info(`${data.source} added successfully!`);
     setIncomes((prevIncomes) => [...prevIncomes, newIncome]);
     reset();
+  };
+
+  const handleDelete = (id: string) => {
+    setIncomes((prevIncomes) => prevIncomes.filter(income => income.id !== id));
+    toast.info("Income entry deleted.");
   };
 
   const formatDate = (dateString: string): string => {
@@ -58,8 +66,7 @@ const Income = (props: IncomeProps) => {
       year: "numeric",
     });
 
-    const formattedDate = formatter.format(date).replace(/,/g, "");
-    return formattedDate;
+    return formatter.format(date).replace(/,/g, "");
   };
 
   return (
@@ -116,10 +123,18 @@ const Income = (props: IncomeProps) => {
       </form>
 
       {incomes.length > 0 ? (
-        <ul className="mt-5 list">
+        <ul className="mt-5 list-unstyled">
           {incomes.map((income) => (
-            <li key={income.id}>
-              {income.source}: {income.amount}EUR on {formatDate(income.date)}
+            <li key={income.id} className="d-flex justify-content-between align-items-center">
+              <div>
+                {income.source}: {income.amount}EUR on {formatDate(income.date)}
+              </div>
+              <FontAwesomeIcon 
+                icon={faTrash} 
+                className="text-danger ms-3" 
+                style={{ cursor: 'pointer' }} 
+                onClick={() => handleDelete(income.id)} 
+              />
             </li>
           ))}
         </ul>

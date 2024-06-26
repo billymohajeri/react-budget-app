@@ -6,6 +6,8 @@ import { nanoid } from "nanoid";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 type ExpenseProps = {
   onGetTotalExpense: (amount: number) => void;
@@ -44,7 +46,7 @@ const Expense = (props: ExpenseProps) => {
       amount: Number(data.amount),
       date: data.date,
     };
-    toast.success(`${data.source} added successfully!`);
+    toast.info(`${data.source} added successfully!`);
     setExpenses((prevExpenses) => [...prevExpenses, newExpense]);
     reset();
   };

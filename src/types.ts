@@ -1,6 +1,6 @@
-export type TransactionType = {
-  id?: string;
+export interface TransactionType {
+  id: string; // make id required
   source: string;
   amount: number;
   date: string;
-};
+}
