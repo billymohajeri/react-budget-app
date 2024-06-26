@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 type TransferProps = {
   totalIncomeAmount: number;
   totalExpenseAmount: number;
+  onGetTransferToSavingAmount: (amount: number) => void;
 };
 
 const Transfer = (props: TransferProps) => {
@@ -14,7 +15,8 @@ const Transfer = (props: TransferProps) => {
 
   const handleTransferAmountSubmit = (event: FormEvent) => {
     event.preventDefault();
-    setTransferAmount(0);
+    props.onGetTransferToSavingAmount(100);
+    // setTransferAmount(0);
   };
 
   return (

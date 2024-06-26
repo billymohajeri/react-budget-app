@@ -1,6 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
-const Target = () => {
+type TargetProps = {
+  transferToSavingAmount: number;
+};
+
+const Target = (props: TargetProps) => {
   const [target, setTarget] = useState(0);
 
   const handleTargetChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +43,7 @@ const Target = () => {
           Reset
         </button>
       </form>
-      <p className="mt-5">Current saving:</p>
+      <p className="mt-5">Current saving: {props.transferToSavingAmount}</p>
       <p className="mt-2">Target: {target}</p>
       <p className="mt-0">Progress:</p>
       <div

@@ -10,6 +10,7 @@ import { useState } from "react";
 function App() {
   const [totalIncomeAmount, setTotalIncomeAmount] = useState(0);
   const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
+  const [transferToSavingAmount, setTransferToSavingAmount] = useState(0);
 
   const getTotalIncome = (amount: number) => {
     setTotalIncomeAmount(amount);
@@ -17,6 +18,10 @@ function App() {
 
   const getTotalExpense = (amount: number) => {
     setTotalExpenseAmount(amount);
+  };
+
+  const getTransferToSavingAmount = (amount: number) => {
+    setTransferToSavingAmount(amount);
   };
 
   return (
@@ -33,7 +38,7 @@ function App() {
               <Expense onGetTotalExpense={getTotalExpense} />
             </div>
             <div className="col px-5">
-              <Target />
+              <Target transferToSavingAmount={transferToSavingAmount}/>
             </div>
           </div>
           <div className="row align-items-center mt-5">
@@ -41,6 +46,7 @@ function App() {
               <Transfer
                 totalIncomeAmount={totalIncomeAmount}
                 totalExpenseAmount={totalExpenseAmount}
+                onGetTransferToSavingAmount={getTransferToSavingAmount}
               />
             </div>
           </div>
