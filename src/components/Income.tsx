@@ -4,11 +4,18 @@ import { TransactionType } from "../types";
 import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
 import { useForm } from "react-hook-form";
-import { spawn } from "child_process";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 
 type IncomeProps = {
   onGetTotalIncome: (amount: number) => void;
 };
+
+const incomeSchema = z.object({
+  source: z.string().min(1, "Income source is required"),
+  amount: z.number().min(1, "The amount can't be negative or zero"),
+  date: z.string().min(1, "Date is required"),
+});
 
 const Income = (props: IncomeProps) => {
   const {
@@ -16,7 +23,9 @@ const Income = (props: IncomeProps) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<TransactionType>();
+  } = useForm<TransactionType>({
+    resolver: zodResolver(incomeSchema),
+  });
   const [incomes, setIncomes] = useState<TransactionType[]>([]);
 
   useEffect(() => {
@@ -64,32 +73,31 @@ const Income = (props: IncomeProps) => {
           type="text"
           className="form-control"
           id="incomeSource"
-          {...register("source", { required: true })}
+          {...register("source")}
         />
+        {errors.source && (
+          <p className="text-danger">{errors.source.message}</p>
+        )}
 
         <label htmlFor="incomeAmount" className="form-label mt-3">
           Amount of income
         </label>
-        <div className="input-group mb-3">
+        <div className="input-group">
           <span className="input-group-text">€</span>
           <input
             type="number"
             id="incomeAmount"
-            {...register("amount", {
-              required: true,
-              min: {
-                value: 1,
-                message: "The amount can't be negative or zero",
-              },
-            })}
+            {...register("amount", { valueAsNumber: true })}
             className="form-control"
             aria-label="Amount (to the nearest euro)"
           />
           <span className="input-group-text">.00</span>
         </div>
-        {errors.amount && <span className="text-danger">{errors.amount.message}</span>}
+        {errors.amount && (
+          <p className="text-danger">{errors.amount.message}</p>
+        )}
 
-        <div className="mt-3 mb-5">
+        <div className="mt-3">
           <label htmlFor="incomeDate" className="form-label">
             Date of income
           </label>
@@ -97,11 +105,14 @@ const Income = (props: IncomeProps) => {
             type="date"
             className="form-control"
             id="incomeDate"
-            {...register("date", { required: true })}
+            {...register("date")}
           />
         </div>
+        {errors.date && (
+          <p className="text-danger">{errors.date.message}</p>
+        )}
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary mt-5">
           Add income
         </button>
       </form>
