@@ -117,7 +117,7 @@ export const Expense = () => {
           })}
         </ul>
       ) : (
-        <p className="mt-5">There is no expense in the list</p>
+        <p className="mb-5 mt-5">There is no expense in the list</p>
       )}
     </>
   );
