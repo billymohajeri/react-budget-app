@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type TargetProps = {
   transferToSavingAmount: number;
@@ -20,6 +20,10 @@ type TargetFormValues = {
 const Target = (props: TargetProps) => {
   const {
     register,
+    setValue,
+    setError,
+    clearErrors,
+    watch,
     reset,
     formState: { errors },
   } = useForm<TargetFormValues>({
@@ -28,10 +32,24 @@ const Target = (props: TargetProps) => {
 
   const [target, setTarget] = useState(0);
 
+  const watchedTargetAmount = watch("targetAmount", target);
+
+  useEffect(() => {
+    try {
+      targetSchema.parse({ targetAmount: watchedTargetAmount });
+      clearErrors("targetAmount");
+      setTarget(watchedTargetAmount);
+    } catch (e) {
+      if (e instanceof z.ZodError) {
+        setError("targetAmount", { message: e.errors[0]?.message });
+      }
+    }
+  }, [watchedTargetAmount, clearErrors, setError]);
+
   const handleTargetChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(event.target.value);
     if (!isNaN(value)) {
-      setTarget(value);
+      setValue("targetAmount", value, { shouldValidate: true });
     }
   };
 
