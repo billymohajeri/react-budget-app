@@ -13,9 +13,11 @@ export const Expense = () => {
   const [expenses, setExpenses] = useState<TransactionType[]>([]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setExpense((prevState) => {
-      return { ...prevState, [event.target.name]: event.target.value };
-    });
+    const { name, value } = event.target;
+    setExpense((prevState) => ({
+      ...prevState,
+      [name]: name === "amount" ? Number(value) : value,
+    }));
   };
 
   const handleExpenseSubmit = (event: FormEvent) => {

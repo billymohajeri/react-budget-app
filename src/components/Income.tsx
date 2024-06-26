@@ -13,9 +13,11 @@ const Income = () => {
   const [incomes, setIncomes] = useState<TransactionType[]>([]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setIncome((prevState) => {
-      return { ...prevState, [event.target.name]: event.target.value };
-    });
+    const { name, value } = event.target;
+    setIncome((prevState) => ({
+      ...prevState,
+      [name]: name === "amount" ? Number(value) : value,
+    }));
   };
 
   const handleIncomeSubmit = (event: FormEvent) => {
