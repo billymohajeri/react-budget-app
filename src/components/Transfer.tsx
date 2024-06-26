@@ -1,6 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 
-const Transfer = () => {
+type TransferProps = {
+  totalIncomeAmount: number;
+  totalExpenseAmount: number;
+};
+
+const Transfer = (props: TransferProps) => {
   const [transferAmount, setTransferAmount] = useState(0);
 
   const handleTransferAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +21,9 @@ const Transfer = () => {
     <div className="balance-container">
       <p className="h2">Balance</p>
       <form onSubmit={handleTransferAmountSubmit}>
-        <p className="form-label mt-5">Current balance:</p>
+        <p className="form-label mt-5">
+          Current balance: {props.totalIncomeAmount - props.totalExpenseAmount}
+        </p>
         <label htmlFor="transferAmount" className="form-label mt-3">
           Transfer to saving account
         </label>

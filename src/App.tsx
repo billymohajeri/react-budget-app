@@ -5,8 +5,20 @@ import Target from "./components/Target";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
 
 function App() {
+  const [totalIncomeAmount, setTotalIncomeAmount] = useState(0);
+  const [totalExpenseAmount, setTotalExpenseAmount] = useState(0);
+
+  const getTotalIncome = (amount: number) => {
+    setTotalIncomeAmount(amount);
+  };
+
+  const getTotalExpense = (amount: number) => {
+    setTotalExpenseAmount(amount);
+  };
+
   return (
     <>
       <div className="App">
@@ -15,10 +27,10 @@ function App() {
           <p className="h1 mt-5 mb-5">Billy's Budget App</p>
           <div className="row align-items-start">
             <div className="col col-border px-5">
-              <Income />
+              <Income onGetTotalIncome={getTotalIncome} />
             </div>
             <div className="col col-border px-5">
-              <Expense />
+              <Expense onGetTotalExpense={getTotalExpense} />
             </div>
             <div className="col px-5">
               <Target />
@@ -26,7 +38,10 @@ function App() {
           </div>
           <div className="row align-items-center mt-5">
             <div className="col px-5 mt-5">
-              <Transfer />
+              <Transfer
+                totalIncomeAmount={totalIncomeAmount}
+                totalExpenseAmount={totalExpenseAmount}
+              />
             </div>
           </div>
         </div>

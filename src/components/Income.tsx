@@ -4,13 +4,25 @@ import { TransactionType } from "../types";
 import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
 
-const Income = () => {
+type IncomeProps = {
+  onGetTotalIncome: (amount: number) => void;
+};
+
+const Income = (props: IncomeProps) => {
   const [income, setIncome] = useState<TransactionType>({
     source: "",
     amount: 0,
     date: "",
   });
+
   const [incomes, setIncomes] = useState<TransactionType[]>([]);
+
+  const totalIncome = incomes.reduce(
+    (total, currentIncome) => total + currentIncome.amount,
+    0
+  );
+
+  props.onGetTotalIncome(totalIncome);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

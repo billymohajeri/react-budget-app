@@ -4,7 +4,11 @@ import { TransactionType } from "../types";
 import { toast } from "react-toastify";
 import { nanoid } from "nanoid";
 
-export const Expense = () => {
+type ExpenseProps = {
+  onGetTotalExpense: (amount: number) => void;
+};
+
+export const Expense = (props: ExpenseProps) => {
   const [expense, setExpense] = useState<TransactionType>({
     source: "",
     amount: 0,
@@ -19,6 +23,13 @@ export const Expense = () => {
       [name]: name === "amount" ? Number(value) : value,
     }));
   };
+
+  const totalExpense = expenses.reduce(
+    (total, currentExpense) => total + currentExpense.amount,
+    0
+  );
+
+  props.onGetTotalExpense(totalExpense);
 
   const handleExpenseSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -106,7 +117,6 @@ export const Expense = () => {
           Add expense
         </button>
       </form>
-
       {expenses && expenses.length > 0 ? (
         <ul className="mt-5 list">
           {expenses.map((expense) => {
