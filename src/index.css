@@ -10,8 +10,35 @@
   justify-content: center;
   margin: 0 auto;
 }
- 
+
 ul {
   text-align: left;
-  list-style-type: none
+  list-style-type: none;
+}
+
+.homepage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #2d3436;
+}
+
+.homepage-image {
+  max-width: 50%;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 5%;
+}
+
+.homepage-link {
+  font-size: 20px;
+  color: white;
+  text-decoration: none;
+}
+
+.homepage-link:hover {
+  text-decoration: underline;
 }
