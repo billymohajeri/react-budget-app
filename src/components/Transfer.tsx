@@ -76,7 +76,7 @@ const Transfer = (props: TransferProps) => {
           <span className="input-group-text">.00</span>
         </div>
         {errors.transferAmount && (
-          <span className="text-danger">{errors.transferAmount.message}</span>
+          <p className="text-danger">{errors.transferAmount.message}</p>
         )}
         <button type="submit" className="btn btn-primary mb-5">
           Transfer

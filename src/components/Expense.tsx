@@ -1,16 +1,15 @@
-import { useState, useEffect } from "react";
-import { TransactionType } from "../types";
-
-import { toast } from "react-toastify";
-import { nanoid } from "nanoid";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { nanoid } from 'nanoid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { TransactionType } from '../types';
 
 type ExpenseProps = {
-  onGetTotalExpense: (amount: number) => void;
+  expenses: TransactionType[];
+  addExpense: (expense: TransactionType) => void;
+  deleteExpense: (id: string) => void;
 };
 
 const expenseSchema = z.object({
@@ -19,7 +18,7 @@ const expenseSchema = z.object({
   date: z.string().min(1, "Date is required"),
 });
 
-const Expense = (props: ExpenseProps) => {
+const Expense = ({ expenses, addExpense, deleteExpense }: ExpenseProps) => {
   const {
     register,
     handleSubmit,
@@ -27,17 +26,8 @@ const Expense = (props: ExpenseProps) => {
     formState: { errors },
   } = useForm<TransactionType>({
     resolver: zodResolver(expenseSchema),
+    defaultValues: { source: "", amount: 0, date: "" },
   });
-  const [expenses, setExpenses] = useState<TransactionType[]>([]);
-
-  useEffect(() => {
-    const totalExpense = expenses.reduce(
-      (total, currentExpense) => total + currentExpense.amount,
-      0
-    );
-
-    props.onGetTotalExpense(totalExpense);
-  }, [expenses, props]);
 
   const onSubmit = (data: TransactionType) => {
     const newExpense: TransactionType = {
@@ -46,16 +36,8 @@ const Expense = (props: ExpenseProps) => {
       amount: Number(data.amount),
       date: data.date,
     };
-    toast.info(`${data.source} added successfully!`);
-    setExpenses((prevExpenses) => [...prevExpenses, newExpense]);
+    addExpense(newExpense);
     reset();
-  };
-
-  const handleDelete = (id: string) => {
-    setExpenses((prevExpenses) =>
-      prevExpenses.filter((expense) => expense.id !== id)
-    );
-    toast.info("Expense entry deleted.");
   };
 
   const formatDate = (dateString: string): string => {
@@ -67,8 +49,7 @@ const Expense = (props: ExpenseProps) => {
       year: "numeric",
     });
 
-    const formattedDate = formatter.format(date).replace(/,/g, "");
-    return formattedDate;
+    return formatter.format(date).replace(/,/g, "");
   };
 
   return (
@@ -125,21 +106,17 @@ const Expense = (props: ExpenseProps) => {
       </form>
 
       {expenses.length > 0 ? (
-        <ul className="mt-5 list">
+        <ul className="mt-5 list-unstyled">
           {expenses.map((expense) => (
-            <li
-              key={expense.id}
-              className="d-flex justify-content-between align-items-center"
-            >
+            <li key={expense.id} className="d-flex justify-content-between align-items-center">
               <div>
-                {expense.source}: {expense.amount}EUR on{" "}
-                {formatDate(expense.date)}
+                {expense.source}: {expense.amount}EUR on {formatDate(expense.date)}
               </div>
-              <FontAwesomeIcon
-                icon={faTrash}
-                className="text-danger ms-3"
-                style={{ cursor: "pointer" }}
-                onClick={() => handleDelete(expense.id)}
+              <FontAwesomeIcon 
+                icon={faTrash} 
+                className="text-danger ms-3" 
+                style={{ cursor: 'pointer' }} 
+                onClick={() => deleteExpense(expense.id)} 
               />
             </li>
           ))}

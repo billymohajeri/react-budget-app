@@ -81,7 +81,7 @@ const Target = (props: TargetProps) => {
           <span className="input-group-text">.00</span>
         </div>
         {errors.targetAmount && (
-          <span className="text-danger">{errors.targetAmount.message}</span>
+          <p className="text-danger">{errors.targetAmount.message}</p>
         )}
 
         <button
